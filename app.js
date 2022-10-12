@@ -152,8 +152,61 @@ console.log(oldest);
 // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
 // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+const category = document.querySelector(".mw-category");
+// const links = category.querySelectorAll("a");
+//links is a nodelist we need to change it to array to use array methods other than only forEach
+//how to change, 2 ways
+
+//method 1 (more readable)
+const links = Array.from(category.querySelectorAll("a"));
+//method 2
+// const links = [...category.querySelectorAll('a')]
+//... spread will take every item out of something (nodelist in this case) initerable and put it into a containing array
+
+// const de = links.map(function (link) {
+//   return link.textContent;
+// });
+
+// const streetName = de.filter(function (name) {
+//   return name.includes("de");
+// });
+
+const de = links
+  .map(function (link) {
+    return link.textContent;
+  })
+  .filter(function (streetName) {
+    return streetName.includes("de");
+  });
+
+console.log(de);
+
 // 7. sort Exercise
 // Sort the people alphabetically by last name
+
+//** for inventors array */
+const lastName = inventors.sort(function (a, b) {
+  if (a.last > b.last) {
+    return 1;
+  } else {
+    return -1;
+  }
+});
+
+console.log(lastName);
+
+//** for people array */
+const alpha = people.sort(function (lastOne, nextOne) {
+  const [alast, afirst] = lastOne.split(", ");
+  const [blast, bfirst] = nextOne.split(", ");
+  if (alast > blast) {
+    return 1;
+  } else {
+    return -1;
+  }
+});
+
+console.log(alpha);
 
 // 8. Reduce Exercise
 // Sum up the instances of each of these
@@ -173,3 +226,13 @@ const data = [
   "car",
   "truck",
 ];
+
+const transportation = data.reduce(function (obj, item) {
+  if (!obj[item]) {
+    obj[item] = 0;
+  }
+  obj[item]++;
+  return obj;
+}, {});
+
+console.log(transportation);
